@@ -29,6 +29,10 @@
         background-color: white;
         color: #0a0a0a;
       }
+      
+      .column {
+        display: flex;
+      }
     </style>
   </head>
   <body>
@@ -44,9 +48,9 @@
         </div>
         <div class="navbar-menu" id="nav-links">
           <div class="navbar-end">
-            <a href="" class="navbar-item link">Keyboards</a>
-            <a href="" class="navbar-item link">Sign Up</a>
-            <a href="" class="navbar-item link">Login</a>
+            <a href="{% url 'index' %}" class="navbar-item link">Keyboards</a>
+            <a href="{% url 'signup' %}" class="navbar-item link">Sign Up</a>
+            <a href="{% url 'login' %}" class="navbar-item link">Login</a>
           </div>
         </div>
       </nav>

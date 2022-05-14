@@ -10,13 +10,60 @@
       * {
         box-sizing: border-box;
       }
+
+      .navbar-menu {
+        background-color: #0a0a0a;
+      }
+
+      .navbar-item {
+        color: white;
+      }
+
+      .navbar-menu .navbar-item:hover {
+        color: black;
+        background-color: white;
+      }
+
+      #company:hover,
+      .navbar .navbar-menu .navbar-end .navbar-item.link:hover {
+        background-color: white;
+        color: #0a0a0a;
+      }
     </style>
   </head>
   <body>
+    <header>
+      <nav class="navbar has-shadow is-black">
+        <div class="navbar-brand">
+          <a href="{% url 'home' %}" class="navbar-item" id="company">Keeber</a>
+          <a class="navbar-burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+        <div class="navbar-menu" id="nav-links">
+          <div class="navbar-end">
+            <a href="" class="navbar-item link">Keyboards</a>
+            <a href="" class="navbar-item link">Sign Up</a>
+            <a href="" class="navbar-item link">Login</a>
+          </div>
+        </div>
+      </nav>
+    </header>
     {% block content %}
     {% endblock %}
-    <footer>
-      <div>All Rights Reserved, &copy; 2022 Keyboard Collector &nbsp;</div>
-   </footer>
+    <footer class="has-background-black has-text-white p-2">
+      <div>All Rights Reserved, &copy; 2022 Keeber &nbsp;</div>
+    </footer>
+   <script>
+    const burgerIcon = document.querySelector('#burger');
+    const navbarMenu = document.querySelector('#nav-links');
+
+    burgerIcon.addEventListener('click', () => {
+      burgerIcon.classList.toggle('is-active');
+      navbarMenu.classList.toggle('is-active');
+    });
+   </script>
   </body>
 </html>

@@ -26,8 +26,8 @@ class Keyboard(models.Model):
     plate = models.CharField(max_length=100, blank=True, null=True)
     stabilizers = models.CharField(max_length=100, blank=True, null=True)
     split = models.BooleanField(default=False)
-    likes = models.ManyToManyField(User, related_name='keyboard_post')
-    time_created = models.DateTimeField(auto_now_add=True)                                   gttz
+    likes = models.ManyToManyField(User, related_name='keyboard_post', blank=True)
+    time_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.case} with {self.switches} switches and {self.keycaps} keycaps'

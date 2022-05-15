@@ -4,6 +4,9 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+
+from django import forms
 
 from .models import Keyboard
 
@@ -17,7 +20,7 @@ def keyboards_index(request):
 
 def keyboard_detail(request, keyboard_id):
     keyboard = Keyboard.objects.get(id=keyboard_id)
-    return render('keyboards/detail.html', {'keyboard': keyboard})
+    return render(request, 'keyboards/detail.html', {'keyboard': keyboard})
 
 def signup(request):
     error_message = ''
@@ -35,3 +38,12 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html',context)
+
+def user_profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    return render(request, 'user/index.html', {'user': user})
+
+def user_keyboards(request, user_id):
+    user = User.objects.get(id=user_id)
+    keyboards = Keyboard.objects.filter(owner=user_id)
+    return render(request, 'user/keyboards.html', {'user': user, 'keyboards': keyboards})

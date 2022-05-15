@@ -29,7 +29,7 @@
         background-color: white;
         color: #0a0a0a;
       }
-      
+
       .column {
         display: flex;
       }
@@ -49,14 +49,19 @@
         <div class="navbar-menu" id="nav-links">
           <div class="navbar-end">
             <a href="{% url 'index' %}" class="navbar-item link">Keyboards</a>
-            <a href="{% url 'signup' %}" class="navbar-item link">Sign Up</a>
-            <a href="{% url 'login' %}" class="navbar-item link">Login</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' user.id %}" class="navbar-item link">Profile</a>
+            <a href="{% url 'logout' %}" class="navbar-item link">Log Out</a>
+            {% else %}
+              <a href="{% url 'signup' %}" class="navbar-item link">Sign Up</a>
+              <a href="{% url 'login' %}" class="navbar-item link">Login</a>
+            {% endif %}
           </div>
         </div>
       </nav>
     </header>
-    {% block content %}
-    {% endblock %}
+      {% block content %}
+      {% endblock %}
     <footer class="has-background-black has-text-white p-2">
       <div>All Rights Reserved, &copy; 2022 Keeber &nbsp;</div>
     </footer>

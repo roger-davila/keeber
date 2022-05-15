@@ -16,7 +16,6 @@ SIZES = (
 
 # Create your models here.
 
-
 class Keyboard(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     case = models.CharField(max_length=100)

@@ -51,6 +51,7 @@
             <a href="{% url 'index' %}" class="navbar-item link">Keyboards</a>
             {% if user.is_authenticated %}
             <a href="{% url 'profile' user.id %}" class="navbar-item link">Profile</a>
+            <a href="{% url 'keyboards_create' %}" class="navbar-item link">Add a Keyboard</a>
             <a href="{% url 'logout' %}" class="navbar-item link">Log Out</a>
             {% else %}
               <a href="{% url 'signup' %}" class="navbar-item link">Sign Up</a>

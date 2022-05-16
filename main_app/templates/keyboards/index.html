@@ -1,33 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <section class="section">
-    <div class="container">
-      <div class="columns is-variable is-multiline is-3">
-        {% for keyboard in keyboards %}
-        <div class="column is-one-quarter">
-          <article class="card">
-            <section class="card-image">
-              <figure class="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-              </figure>
-            </section>
-            <section class="card-content">
-              <section class="media">
-                <section class="media-left">
-                  <figure class="image is-48x48">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                  </figure>
-                </section>
-                <section class="media-content">
+  <div class="container">
+    <h1 class="title">All Keyboards</h1>
+    <div class="columns is-variable is-multiline is-3">
+      {% for keyboard in keyboards %}
+      <div class="column is-one-quarter">
+        <article class="card">
+          <section class="card-header">
+            <p class="card-header-title">{{keyboard.total_likes}} Likes</p>
+          </section>
+          <section class="card-image">
+            <figure class="image is-4by3">
+              <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+            </figure>
+          </section>
+          <section class="card-content">
+            <section class="media">
+              <section class="media-left">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                </figure>
+              </section>
+              <section class="media-content">
+                <a href="{% url 'detail' keyboard.id %}">
                   <p class="title is-6">{{ keyboard.case }} with {{ keyboard.switches }} and {{ keyboard.keycaps }}</p>
+                </a>
+                <a href="{% url 'keyboards' keyboard.owner.id %}">
                   <p class="subtitle is-6">@{{ keyboard.owner.username }}</p>
-                </section>
+                </a>
               </section>
             </section>
-          </article>
-        </div>
-        {% endfor %}
+          </section>
+        </article>
       </div>
-  </section>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

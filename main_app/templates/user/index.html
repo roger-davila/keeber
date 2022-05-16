@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>{{ user.username }}</h1>
-  <a href="{% url 'keyboards' user.id %}">See Their Keyboards</a>
+  <div class="container">
+    <h1 class="title">{{ user.username }}</h1>
+    <a href="{% url 'keyboards' user.id %}">See Their Keyboards</a>
+  </div>
 {% endblock %}

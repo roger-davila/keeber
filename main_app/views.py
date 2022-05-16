@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
-
-from django import forms
-
+from django.db.models import Count
 from .models import Keyboard
 
 # Create your views here.
@@ -15,12 +14,38 @@ def home(request):
     return render(request, 'home.html')
 
 def keyboards_index(request):
-    keyboards = Keyboard.objects.all()
+    keyboards = Keyboard.objects.all().annotate(total_likes=Count('likes'))
     return render(request, 'keyboards/index.html', {'keyboards': keyboards})
 
 def keyboard_detail(request, keyboard_id):
-    keyboard = Keyboard.objects.get(id=keyboard_id)
+    keyboards = Keyboard.objects.annotate(total_likes=Count('likes'))
+    keyboard = keyboards.get(id=keyboard_id)
     return render(request, 'keyboards/detail.html', {'keyboard': keyboard})
+
+class KeyboardCreate(LoginRequiredMixin, CreateView):
+    model = Keyboard
+    fields = ['case', 'keycaps', 'switches', 'size', 'plate', 'stabilizers', 'split']
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+class KeyboardDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Keyboard
+    permission_required = ('keyboards.can_edit')
+
+    def get_success_url(self):
+        return reverse('keyboards', kwargs={'user_id': self.request.user.pk})
+
+class KeyboardUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Keyboard
+    permission_required = ('keyboards.can_edit')
+    fields = ['case', 'keycaps', 'switches', 'size', 'plate', 'stabilizers', 'split']
+
+def like_view(request, keyboard_id):
+    keyboard = Keyboard.objects.get(id=keyboard_id)
+    keyboard.likes.add(request.user)
+    return redirect('detail', keyboard_id=keyboard_id)
 
 def signup(request):
     error_message = ''
@@ -45,5 +70,5 @@ def user_profile(request, user_id):
 
 def user_keyboards(request, user_id):
     user = User.objects.get(id=user_id)
-    keyboards = Keyboard.objects.filter(owner=user_id)
+    keyboards = Keyboard.objects.filter(owner=user_id).annotate(total_likes=Count('likes'))
     return render(request, 'user/keyboards.html', {'user': user, 'keyboards': keyboards})

@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container">
+  <div class="container scroll p-2">
     <h1 class="title">{{keyboard}}</h1>
     <div class="columns is-variable is-multiline is-3">
-      <div class="column is-one-quarter">
+      <div class="column is-full">
         <article class="card">
           <section class="card-header">
             <p class="card-header-title">{{keyboard.total_likes}} Likes</p>
@@ -33,10 +33,10 @@
           </section>
           <footer class="card-footer">
             {% if user.is_authenticated %}
-            <form class="card-footer-item" action="{% url 'like_keyboard' keyboard.id %}" method="POST">
+            <form class="is-sr-only" action="{% url 'like_keyboard' keyboard.id %}" method="POST" id="like{{keyboard_id}}">
               {% csrf_token %}
-              <button type="submit" name="keyboard_id" value="keyboard_id">Like</button>
             </form>
+            <p class="card-footer-item" onclick="document.getElementById('like{{keyboard_id}}').submit()">Like</p>
             {% endif %}
             {% if keyboard.owner.id == user.id %}
               <a class="card-footer-item" href="{% url 'keyboards_delete' keyboard.id %}">Delete</a>

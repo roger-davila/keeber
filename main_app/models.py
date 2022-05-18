@@ -16,6 +16,7 @@ SIZES = (
 
 # Create your models here.
 
+
 class Keyboard(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     case = models.CharField(max_length=100)
@@ -25,7 +26,8 @@ class Keyboard(models.Model):
     plate = models.CharField(max_length=100, blank=True, null=True)
     stabilizers = models.CharField(max_length=100, blank=True, null=True)
     split = models.BooleanField(default=False)
-    likes = models.ManyToManyField(User, related_name='keyboard_post', blank=True)
+    likes = models.ManyToManyField(
+        User, related_name='keyboard_post', blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-{% if object %}
-  <h1>Edit <span class="teal-text">{{ object.case }}</span></h1>
-{% else %}
-  <h1>Add Keyboard</h1>
-{% endif %}
-
-<form action="" method="POST">
-  {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  <input type="submit" value="Submit!" class="btn">
-</form>
-
+<main class="container is-max-desktop p-2">
+  {% if object %}
+    <h1 class="title">Edit <span class="teal-text">{{ object.case }}</span></h1>
+  {% else %}
+    <h1 class="title">Add Keyboard</h1>
+  {% endif %}
+  
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+      {% if field.label == 'Size' %}
+        <div class="field">
+          {{field.label_tag}}
+          <div class="select is-fullwidth">
+            {{ field }}
+            {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <div class="field">
+          {{ field.errors }}
+          {{ field.label_tag }} {{ field }}
+          {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+   {% endfor %}
+    <button type="submit" value="Submit!" class="button">Add Keyboard</button>
+  </form>
+</main>
 {% endblock %}

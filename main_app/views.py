@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.models import User
 from django.db.models import Count
 from .models import Keyboard
-from .forms import UserRegistrationForm, KeyboardCreateForm
+from .forms import UserRegistrationForm
 
 # Create your views here.
 

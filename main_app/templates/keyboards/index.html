@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container">
+  <div class="container scroll p-2">
     <h1 class="title">All Keyboards</h1>
     <div class="columns is-variable is-multiline is-3">
       {% for keyboard in keyboards %}
-      <div class="column is-one-quarter">
-        <article class="card">
+      <div class="column is-full">
+        <article class="card is">
           <section class="card-header">
             <p class="card-header-title">{{keyboard.total_likes}} Likes</p>
           </section>
